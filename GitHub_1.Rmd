@@ -1,0 +1,14 @@
+---
+title: "GitHub_1"
+output: html_document
+---
+
+```{r}
+source("SetUp.R")
+```
+
+Load Data
+```{r}
+data("knz_bison")
+```
+
