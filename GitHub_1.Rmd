@@ -12,3 +12,32 @@ Load Data
 data("knz_bison")
 ```
 
+Create a column that calculates age
+```{r}
+knz_bison <- knz_bison %>%
+  mutate(age = as.numeric(format(Sys.Date(), "%Y")) - rec_year)
+```
+
+Write a function to filter dataset based on weight threshold
+```{r}
+weight_subset <- function(knz_bison, animal_weight, min_weight, max_weight) {
+  animal_weight <- enquo(animal_weight)
+  knz_bison %>%
+    filter((!!animal_weight) >= min_weight & (!!animal_weight) <= max_weight)
+}
+```
+
+Testing function
+```{r}
+subset_table <- weight_subset(knz_bison, animal_weight,800,815 )
+```
+
+Create a boxplot showing weight distribution between male and female bison, conduct a t-test
+
+```{r}
+ggplot(knz_bison, aes(x = animal_sex, y = animal_weight, fill = animal_sex)) +
+  geom_boxplot() 
+
+t_test(knz_bison, formula =animal_weight ~ animal_sex)
+```
+
